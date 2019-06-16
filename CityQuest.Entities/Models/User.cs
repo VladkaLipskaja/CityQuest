@@ -28,7 +28,7 @@ namespace CityQuest.Entities.Models
         /// <value>
         /// The quest to users.
         /// </value>
-        public ICollection<QuestToUser> QuestToUsers { get; set; }
+        public virtual ICollection<QuestToUser> QuestToUsers { get; set; }
     }
 
     /// <summary>

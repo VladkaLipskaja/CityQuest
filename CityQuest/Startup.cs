@@ -88,6 +88,9 @@ namespace CityQuest
             services.AddScoped<ITopicService, TopicService>();
 
             services.AddMvc();
+
+            // Register the Swagger services
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,10 +102,21 @@ namespace CityQuest
         /// <param name="env">The env.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Register the Swagger generator and the Swagger UI middlewares
+            app.UseSwagger();
+            app.UseSwaggerUi3();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }

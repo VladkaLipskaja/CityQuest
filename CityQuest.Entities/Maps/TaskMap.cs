@@ -13,7 +13,7 @@ namespace CityQuest.Entities.Models
     /// Task map.
     /// </summary>
     /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{CityQuest.Entities.Models.Mission}" />
-    public class TaskMap : IEntityTypeConfiguration<Mission>
+    public class MissionMap : IEntityTypeConfiguration<Mission>
     {
         /// <summary>
         /// Configures the entity of type <typeparamref name="TEntity" />.

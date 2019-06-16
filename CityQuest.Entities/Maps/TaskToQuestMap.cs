@@ -13,7 +13,7 @@ namespace CityQuest.Entities.Models
     /// Task to quest map.
     /// </summary>
     /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{CityQuest.Entities.Models.MissionToQuest}" />
-    public class TaskToQuestMap : IEntityTypeConfiguration<MissionToQuest>
+    public class MissionToQuestMap : IEntityTypeConfiguration<MissionToQuest>
     {
         /// <summary>
         /// Configures the entity of type <typeparamref name="TEntity" />.
@@ -22,13 +22,14 @@ namespace CityQuest.Entities.Models
         public void Configure(EntityTypeBuilder<MissionToQuest> builder)
         {
             // Primary key
-            builder.HasKey(t => new { t.QuestID, t.Task });
+            builder.HasKey(t => new { t.QuestID, t.TaskID });
 
             // Properties
             builder.ToTable("tasktoquest");
 
             builder.Property(t => t.QuestID).HasColumnName("questid");
             builder.Property(t => t.TaskID).HasColumnName("taskid");
+            builder.Property(t => t.TaskNumber).HasColumnName("tasknumber");
 
             builder.HasOne(t => t.Quest).WithMany(t => t.TaskToQuests).HasForeignKey(t => t.QuestID);
             builder.HasOne(t => t.Task).WithMany(t => t.TaskToQuests).HasForeignKey(t => t.TaskID);

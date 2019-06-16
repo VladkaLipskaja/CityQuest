@@ -87,13 +87,13 @@ namespace CityQuest.Entities
         {
             modelBuilder.HasDefaultSchema("public");
 
+            modelBuilder.ApplyConfiguration(new MissionMap());
             modelBuilder.ApplyConfiguration(new QuestMap());
-            modelBuilder.ApplyConfiguration(new QuestToUserMap());
-            modelBuilder.ApplyConfiguration(new TaskMap());
-            modelBuilder.ApplyConfiguration(new TaskToQuestMap());
-            modelBuilder.ApplyConfiguration(new TaskToTopicMap());
-            modelBuilder.ApplyConfiguration(new TopicMap());
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new TopicMap());
+            modelBuilder.ApplyConfiguration(new QuestToUserMap());
+            modelBuilder.ApplyConfiguration(new MissionToQuestMap());
+            modelBuilder.ApplyConfiguration(new MissionToTopicMap());
 
             base.OnModelCreating(modelBuilder);
         }

@@ -13,7 +13,7 @@ namespace CityQuest.Entities.Models
     /// Task to topic map.
     /// </summary>
     /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{CityQuest.Entities.Models.MissionToTopic}" />
-    public class TaskToTopicMap : IEntityTypeConfiguration<MissionToTopic>
+    public class MissionToTopicMap : IEntityTypeConfiguration<MissionToTopic>
     {
         /// <summary>
         /// Configures the entity of type <typeparamref name="TEntity" />.
@@ -27,7 +27,7 @@ namespace CityQuest.Entities.Models
             // Properties
             builder.ToTable("tasktotopic");
 
-            builder.Property(t => t.TopicID).HasColumnName("TopicID");
+            builder.Property(t => t.TopicID).HasColumnName("topicid");
             builder.Property(t => t.TaskID).HasColumnName("taskid");
 
             builder.HasOne(t => t.Topic).WithMany(t => t.TaskToTopics).HasForeignKey(t => t.TopicID);

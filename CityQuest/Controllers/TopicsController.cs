@@ -52,6 +52,7 @@ namespace CityQuest.Controllers
         /// <returns>
         /// The array of topics.
         /// </returns>
+        [AllowAnonymous]
         [HttpGet("{search}")]
         public async Task<JsonResult> GetTopics(string search)
         {
