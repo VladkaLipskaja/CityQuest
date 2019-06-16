@@ -11,8 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
-    <PackageReference Include="NSwag.AspNetCore" Version="12.3.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.4" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,12 +22,5 @@
   <ItemGroup>
     <ProjectReference Include="..\CityQuest.Services\CityQuest.Services.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Models\Quest\GetQuestMissionsResponse.cs">
-      <ExcludeFromSourceAnalysis>False</ExcludeFromSourceAnalysis>
-      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
-    </Compile>
-  </ItemGroup>
-
+  
 </Project>

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityQuest", "CityQuest\CityQuest.csproj", "{55B92BF8-7482-4276-8B50-C95D39C7C072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityQuest.Api", "CityQuest\CityQuest.Api.csproj", "{55B92BF8-7482-4276-8B50-C95D39C7C072}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityQuest.Entities", "CityQuest.Entities\CityQuest.Entities.csproj", "{B30C0620-35CA-4EE9-9614-BC643E976DBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityQuest.Entities", "CityQuest.Entities\CityQuest.Entities.csproj", "{B30C0620-35CA-4EE9-9614-BC643E976DBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityQuest.Services", "CityQuest.Services\CityQuest.Services.csproj", "{5D931070-08B5-47F9-A0A2-F938D5B70A68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityQuest.Services", "CityQuest.Services\CityQuest.Services.csproj", "{5D931070-08B5-47F9-A0A2-F938D5B70A68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityQuest.Models", "CityQuest.Models\CityQuest.Models.csproj", "{9D463FC3-6842-4F49-B727-18405B419060}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityQuest.Models", "CityQuest.Models\CityQuest.Models.csproj", "{9D463FC3-6842-4F49-B727-18405B419060}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
