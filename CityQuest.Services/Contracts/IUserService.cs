@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 
 using System.Threading.Tasks;
+using CityQuest.Entities.Models;
 using CityQuest.Models.Dtos;
 
 namespace CityQuest.Services
@@ -32,5 +33,14 @@ namespace CityQuest.Services
         /// The method is void.
         /// </returns>
         Task RegisterAsync(UserDto user);
+
+        /// <summary>
+        /// Gets the user data asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// The user data.
+        /// </returns>
+        Task<User> GetUserDataAsync(int id);
     }
 }

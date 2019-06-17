@@ -28,7 +28,7 @@ namespace CityQuest.Services
         /// <summary>
         /// The hashing service
         /// </summary>
-        private readonly ISecurityService _hashingService;
+        private readonly ISecurityService _securityService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
@@ -38,7 +38,7 @@ namespace CityQuest.Services
         public UserService(ISecurityService hashingService, IRepository<User> userRepository)
         {
             _userRepository = userRepository;
-            _hashingService = hashingService;
+            _securityService = hashingService;
         }
 
         /// <summary>
@@ -58,14 +58,14 @@ namespace CityQuest.Services
                 throw new UserException(UserErrorCode.InvalidLogin);
             }
 
-            string hashedPassword = _hashingService.GetHash(password);
+            string hashedPassword = _securityService.GetHash(password);
 
             if (user.Password != hashedPassword)
             {
                 throw new UserException(UserErrorCode.InvalidPassword);
             }
 
-            string token = _hashingService.GetToken(user.ID);
+            string token = _securityService.GetToken(user.ID);
 
             return token;
         }
@@ -86,7 +86,7 @@ namespace CityQuest.Services
                 throw new UserException(UserErrorCode.ExistingLogin);
             }
 
-            string hashedPassword = _hashingService.GetHash(user.Password);
+            string hashedPassword = _securityService.GetHash(user.Password);
 
             User newUser = new User
             {
@@ -95,6 +95,28 @@ namespace CityQuest.Services
             };
 
             await _userRepository.AddAsync(newUser);
+        }
+
+        /// <summary>
+        /// Get users data asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// The method is void.
+        /// </returns>
+        /// <exception cref="UserException">
+        /// There is no user with such id. 
+        /// </exception>
+        public async Task<User> GetUserDataAsync(int id)
+        {
+            User user = (await _userRepository.GetAsync(u => u.ID == id)).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new UserException(UserErrorCode.NoSuchUser);
+            }
+
+            return user;
         }
     }
 }
