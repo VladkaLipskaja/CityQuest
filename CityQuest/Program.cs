@@ -31,7 +31,6 @@ namespace CityQuest
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:5000", "http://192.168.1.1:5000")
                 .Build();
     }
 }
