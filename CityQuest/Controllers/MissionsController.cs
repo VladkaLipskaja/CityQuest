@@ -5,10 +5,12 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Security;
+using System.Linq;
 using System.Threading.Tasks;
+using CityQuest.Entities.Models;
 using CityQuest.Extensions;
 using CityQuest.Models.Dtos;
+using CityQuest.Models.Exceptions;
 using CityQuest.Models.Mission;
 using CityQuest.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -83,6 +85,52 @@ namespace CityQuest.Controllers
                 return this.JsonApi(id);
             }
             catch (SecurityException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
+
+        [HttpGet("quest/{questId}")]
+        public async Task<JsonResult> GetLastQuestTasks(int questId)
+        {
+            try
+            {
+                int userId = _securityService.GetUserId(User);
+
+                QuestToUserDto questToUserDto = new QuestToUserDto
+                {
+                    UserId = userId,
+                    QuestId = questId
+                };
+
+                Mission[] missions = await _missionService.GetLastDoneMissions(questToUserDto);
+
+                GetLastQuestTasksResponse response = new GetLastQuestTasksResponse
+                {
+                    Missions = missions.Select(m => new GetLastQuestTasksResponse.Mission
+                    {
+                        Answer = m.Answer,
+                        Coordinate1 = m.Coordinate1,
+                        Coordinate2 = m.Coordinate2,
+                        Coordinate3 = m.Coordinate3,
+                        Coordinate4 = m.Coordinate4,
+                        Text = m.Text,
+                        ID = m.ID,
+                        Points = m.Points
+                    }).ToArray()
+                };
+
+                return this.JsonApi(response);
+            }
+            catch (UserException exception)
+            {
+                return this.JsonApi(exception);
+            }
+            catch (QuestToUserException exception)
+            {
+                return this.JsonApi(exception);
+            }
+            catch (QuestException exception)
             {
                 return this.JsonApi(exception);
             }

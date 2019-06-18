@@ -30,6 +30,10 @@ namespace CityQuest.Services
         /// </summary>
         private readonly IRepository<Quest> _questRepository;
 
+        private readonly IRepository<QuestToUser> _questToUserRepository;
+
+        private readonly IRepository<User> _userRepository;
+
         /// <summary>
         /// The mission repository
         /// </summary>
@@ -43,11 +47,13 @@ namespace CityQuest.Services
         /// <param name="missionToQuestRepository">The mission to quest repository.</param>
         /// <param name="missionRepository">The mission repository.</param>
         /// <param name="questRepository">The quest repository.</param>
-        public MissionService(IRepository<MissionToQuest> missionToQuestRepository, IRepository<Mission> missionRepository, IRepository<Quest> questRepository)
+        public MissionService(IRepository<MissionToQuest> missionToQuestRepository, IRepository<Mission> missionRepository, IRepository<Quest> questRepository, IRepository<User> userRepository, IRepository<QuestToUser> questToUserRepository)
         {
             _questRepository = questRepository;
             _missionToQuestRepository = missionToQuestRepository;
             _missionRepository = missionRepository;
+            _userRepository = userRepository;
+            _questToUserRepository = questToUserRepository;
         }
 
         /// <summary>
@@ -70,6 +76,36 @@ namespace CityQuest.Services
             }
 
             MissionToQuest[] missions = (await _missionToQuestRepository.GetAsync(q => q.QuestID == questId, q => q.Task)).ToArray();
+
+            return missions;
+        }
+
+        public async Task<Mission[]> GetLastDoneMissions(QuestToUserDto questToUser)
+        {
+            User user = (await _userRepository.GetAsync(u => u.ID == questToUser.UserId)).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new UserException(UserErrorCode.NoSuchUser);
+            }
+
+            Quest quest = (await _questRepository.GetAsync(u => u.ID == questToUser.QuestId)).FirstOrDefault();
+
+            if (quest == null)
+            {
+                throw new QuestException(QuestErrorCode.NoSuchQuest);
+            }
+
+            QuestToUser existedQuestToUser = (await _questToUserRepository.GetAsync(qu => qu.QuestID == questToUser.QuestId && qu.UserID == questToUser.UserId)).FirstOrDefault();
+
+            if (existedQuestToUser == null)
+            {
+                throw new QuestToUserException(QuestToUserErrorCode.NotExist);
+            }
+
+            int[] missionIds = (await _missionToQuestRepository.GetAsync(qu => qu.QuestID == questToUser.QuestId && qu.TaskNumber <= questToUser.FinishedTasks + 1)).Select(m => m.TaskID).ToArray();
+
+            Mission[] missions = (await _missionRepository.GetAsync(m => missionIds.Contains(m.ID))).ToArray();
 
             return missions;
         }

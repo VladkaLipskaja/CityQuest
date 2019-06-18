@@ -35,5 +35,7 @@ namespace CityQuest.Services
         /// The identifier of the new mission.
         /// </returns>
         Task<int> AddMissionAsync(MissionDto mission);
+
+        Task<Mission[]> GetLastDoneMissions(QuestToUserDto questToUser);
     }
 }
