@@ -150,6 +150,29 @@ namespace CityQuest.Controllers
             return this.JsonApi(response);
         }
 
+        [HttpGet("untouched")]
+        public async Task<JsonResult> GetUntouchedMissions()
+        {
+            Mission[] missions = await _missionService.GetUntouchedMissions();
+
+            GetUntouchedMissionsResponse response = new GetUntouchedMissionsResponse
+            {
+                Missions = missions.Select(m => new GetUntouchedMissionsResponse.Mission
+                {
+                    Answer = m.Answer,
+                    Coordinate1 = m.Coordinate1,
+                    Coordinate2 = m.Coordinate2,
+                    Coordinate3 = m.Coordinate3,
+                    Coordinate4 = m.Coordinate4,
+                    Text = m.Text,
+                    ID = m.ID,
+                    Points = m.Points
+                }).ToArray()
+            };
+
+            return this.JsonApi(response);
+        }
+
         [HttpGet("quest/{questId}")]
         public async Task<JsonResult> GetLastQuestTasks(int questId)
         {

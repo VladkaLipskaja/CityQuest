@@ -117,6 +117,15 @@ namespace CityQuest.Services
             return missions;
         }
 
+        public async Task<Mission[]> GetUntouchedMissions()
+        {
+            int[] touchedMissionIds = (await _missionToQuestRepository.ListAllAsync()).Select(m => m.TaskID).ToArray();
+
+            Mission[] missions = (await _missionRepository.GetAsync(m => !touchedMissionIds.Contains(m.ID))).ToArray();
+
+            return missions;
+        }
+
         public async Task AddMissionToQuestAsync(MissionToQuestDto mission)
         {
             Mission existingMission = (await _missionRepository.GetAsync(m => m.ID == mission.TaskID)).FirstOrDefault();
