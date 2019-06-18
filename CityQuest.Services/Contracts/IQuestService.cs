@@ -79,5 +79,7 @@ namespace CityQuest.Services
         Task<Quest> GetLastQuestAsync();
 
         Task<Quest[]> GetQuestsAsync();
+
+        Task<Quest[]> GetUntouchedQuestsAsync();
     }
 }

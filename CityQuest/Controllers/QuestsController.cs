@@ -111,6 +111,25 @@ namespace CityQuest.Controllers
             return this.JsonApi(response);
         }
 
+        [HttpGet("untouched")]
+        public async Task<JsonResult> GetUntouchedQuests()
+        {
+            Quest[] quests = await _questService.GetUntouchedQuestsAsync();
+
+            GetUntouchedQuestsResponse response = new GetUntouchedQuestsResponse
+            {
+                Quests = quests?.Select(q => new GetUntouchedQuestsResponse.Quest
+                {
+                    ID = q.ID,
+                    Name = q.Name,
+                    Price = q.Price,
+                    Points = q.Points
+                }).ToArray()
+            };
+
+            return this.JsonApi(response);
+        }
+
         [HttpGet("user")]
         public async Task<JsonResult> GetUserQuests()
         {
