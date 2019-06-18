@@ -90,6 +90,22 @@ namespace CityQuest.Services
 
             return quests;
         }
+        
+        public async Task<Quest[]> GetUserQuestsAsync(int userId)
+        {
+            User user = (await _userRepository.GetAsync(u => u.ID == userId)).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new UserException(UserErrorCode.NoSuchUser);
+            }
+
+            int[] questIds = (await _questToUserRepository.GetAsync(qu => qu.UserID == userId)).Select(qu => qu.QuestID).ToArray();
+
+            Quest[] quests = (await _questRepository.GetAsync(q => questIds.Contains(q.ID))).ToArray();
+
+            return quests;
+        }
 
         /// <summary>
         /// Adds the quest asynchronous.
@@ -236,7 +252,8 @@ namespace CityQuest.Services
             {
                 Id = m.ID,
                 Points = m.Points,
-                Text = m.Text
+                Text = m.Text,
+                Answer = m.Answer
             }).ToArray();
 
             TaskToUserDto userTasks = new TaskToUserDto

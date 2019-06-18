@@ -69,5 +69,7 @@ namespace CityQuest.Services
         /// <exception cref="UserException">There is no user with such id.</exception>
         /// <exception cref="QuestToUserException">There is no quest to user with such id.</exception>
         Task UpdateQuestToUserAsync(QuestToUserDto questToUser);
+
+        Task<Quest[]> GetUserQuestsAsync(int userId);
     }
 }

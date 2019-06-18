@@ -92,6 +92,34 @@ namespace CityQuest.Controllers
             }
         }
 
+        [HttpGet("user")]
+        public async Task<JsonResult> GetUserQuests()
+        {
+            try
+            {
+                int userId = _securityService.GetUserId(User);
+
+                Quest[] quests = await _questService.GetUserQuestsAsync(userId);
+
+
+                GetUserQuestsResponse response = new GetUserQuestsResponse
+                {
+                    Quests = quests?.Select(q => new GetUserQuestsResponse.Quest
+                    {
+                        ID = q.ID,
+                        Name = q.Name,
+                        Price = q.Price                        
+                    }).ToArray()
+                };
+
+                return this.JsonApi(response);
+            }
+            catch (QuestException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
+
         /// <summary>
         /// Adds the quest.
         /// </summary>
@@ -263,7 +291,8 @@ namespace CityQuest.Controllers
                     {
                         Id = t.Id,
                         Points = t.Points,
-                        Text = t.Text
+                        Text = t.Text,
+                        Answer = t.Answer
                     }).ToArray()    
                 };
 
