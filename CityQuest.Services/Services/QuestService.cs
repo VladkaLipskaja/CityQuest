@@ -91,6 +91,13 @@ namespace CityQuest.Services
             return quests;
         }
 
+        public async Task<Quest[]> GetQuestsAsync()
+        {
+            Quest[] quests = (await _questRepository.ListAllAsync()).ToArray();
+
+            return quests;
+        }
+
         public async Task<Quest> GetLastQuestAsync()
         {
             Quest quest = (await _questRepository.ListAllAsync()).OrderByDescending(q => q.ID).FirstOrDefault();
