@@ -217,7 +217,7 @@ namespace CityQuest.Controllers
         /// <returns>The success indicator.</returns>
         /// <exception cref="System.ArgumentNullException">Invalid request.</exception>
         [HttpPost]
-        public async Task<JsonResult> AddQuest(AddQuestRequest request)
+        public async Task<JsonResult> AddQuest([FromBody]AddQuestRequest request)
         {
             if (request == null)
             {
