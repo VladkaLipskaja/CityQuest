@@ -26,5 +26,13 @@ namespace CityQuest.Models.Dtos
         /// The password.
         /// </value>
         public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the points.
+        /// </summary>
+        /// <value>
+        /// The points.
+        /// </value>
+        public int? Points { get; set; }
     }
 }

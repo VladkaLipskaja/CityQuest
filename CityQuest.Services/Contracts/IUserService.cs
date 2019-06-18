@@ -42,5 +42,7 @@ namespace CityQuest.Services
         /// The user data.
         /// </returns>
         Task<User> GetUserDataAsync(int id);
+
+        Task SetUserPoints(UserPointsDto userPointsDto);
     }
 }

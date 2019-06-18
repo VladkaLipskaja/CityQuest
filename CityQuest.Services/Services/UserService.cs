@@ -118,5 +118,19 @@ namespace CityQuest.Services
 
             return user;
         }
+
+        public async Task SetUserPoints(UserPointsDto userPoints)
+        {
+            User user = (await _userRepository.GetAsync(u => u.ID == userPoints.UserId)).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new UserException(UserErrorCode.NoSuchUser);
+            }
+
+            user.Points = userPoints.Points;
+
+            await _userRepository.UpdateAsync(user);
+        }
     }
 }

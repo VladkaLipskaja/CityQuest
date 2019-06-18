@@ -33,6 +33,7 @@ namespace CityQuest.Entities.Models
             builder.Property(t => t.Login).HasColumnName("login");
             builder.Property(t => t.Password).HasColumnName("password");
             builder.Property(t => t.IsAdmin).HasColumnName("isadmin");
+            builder.Property(t => t.Points).HasColumnName("points");
         }
     }
 }

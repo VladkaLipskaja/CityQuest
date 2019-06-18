@@ -119,6 +119,34 @@ namespace GreenSens.Api.Controllers
             }
         }
 
+        [HttpPut("points")]
+        public async Task<JsonResult> SetUserPoints([FromBody]SetUserPointsRequest request)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            try
+            {
+                int userId = _securityService.GetUserId(User);
+
+                UserPointsDto userPoints = new UserPointsDto
+                {
+                    UserId = userId,
+                    Points = request.Points
+                };
+
+                await _userService.SetUserPoints(userPoints);
+                
+                return this.JsonApi();
+            }
+            catch (UserException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
+
         /// <summary>
         /// Get user data.
         /// </summary>

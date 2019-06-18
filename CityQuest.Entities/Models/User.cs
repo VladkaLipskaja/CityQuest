@@ -67,5 +67,7 @@ namespace CityQuest.Entities.Models
         ///   <c>true</c> if this instance is admin; otherwise, <c>false</c>.
         /// </value>
         public bool IsAdmin { get; set; }
+
+        public int? Points { get; set; }
     }
 }
