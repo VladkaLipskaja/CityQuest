@@ -117,10 +117,6 @@ namespace GreenSens.Api.Controllers
             {
                 return this.JsonApi(exception);
             }
-            catch (Exception ex)
-            {
-                return this.JsonApi(ex.InnerException);
-            }
         }
 
         /// <summary>
