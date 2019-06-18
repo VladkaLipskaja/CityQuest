@@ -110,6 +110,13 @@ namespace CityQuest.Services
             return missions;
         }
 
+        public async Task<Mission[]> GetMissions()
+        {           
+            Mission[] missions = (await _missionRepository.ListAllAsync()).ToArray();
+
+            return missions;
+        }
+
         /// <summary>
         /// Adds the mission asynchronous.
         /// </summary>
