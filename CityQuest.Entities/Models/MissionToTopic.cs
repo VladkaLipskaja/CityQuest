@@ -49,5 +49,13 @@ namespace CityQuest.Entities.Models
         /// The task identifier.
         /// </value>
         public int TaskId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the quest identifier.
+        /// </summary>
+        /// <value>
+        /// The quest identifier.
+        /// </value>
+        public int? QuestId { get; set; }
     }
 }

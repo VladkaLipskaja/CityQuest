@@ -51,7 +51,6 @@ namespace CityQuest.Entities
         /// <returns>The list of entities.</returns>
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
-            var k = _dbContext.Set<T>();
             return await _dbContext.Set<T>().Where(predicate).ToListAsync();
         }
 

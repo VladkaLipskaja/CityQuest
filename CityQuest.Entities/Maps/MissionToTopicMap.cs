@@ -29,6 +29,7 @@ namespace CityQuest.Entities.Models
             
             builder.Property(t => t.TaskId).HasColumnName("taskid");
             builder.Property(t => t.TopicId).HasColumnName("topicid");
+            builder.Property(t => t.QuestId).HasColumnName("questid");
 
             builder.HasOne(t => t.Topic).WithMany(t => t.TaskToTopics).HasForeignKey(t => t.TopicId);
             builder.HasOne(t => t.Task).WithMany(t => t.TaskToTopics).HasForeignKey(t => t.TaskId);
