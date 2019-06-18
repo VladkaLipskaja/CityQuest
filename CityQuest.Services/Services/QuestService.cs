@@ -40,6 +40,16 @@ namespace CityQuest.Services
         /// </summary>
         private readonly IRepository<Topic> _topicRepository;
 
+        /// <summary>
+        /// The mission repository
+        /// </summary>
+        private readonly IRepository<Mission> _missionRepository;
+
+        /// <summary>
+        /// The mission to quest repository
+        /// </summary>
+        private readonly IRepository<MissionToQuest> _missionToQuestRepository;
+
         // private readonly IAppLogger<BasketService> _logger;
 
         /// <summary>
@@ -49,12 +59,14 @@ namespace CityQuest.Services
         /// <param name="questToUserRepository">The quest to user repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="topicRepository">The topic repository.</param>
-        public QuestService(IRepository<Quest> questRepository, IRepository<QuestToUser> questToUserRepository, IRepository<User> userRepository, IRepository<Topic> topicRepository)
+        public QuestService(IRepository<Quest> questRepository, IRepository<QuestToUser> questToUserRepository, IRepository<User> userRepository, IRepository<Topic> topicRepository, IRepository<MissionToQuest> missionToQuestRepository, IRepository<Mission> missionRepository)
         {
             _userRepository = userRepository;
             _questRepository = questRepository;
             _questToUserRepository = questToUserRepository;
             _topicRepository = topicRepository;
+            _missionToQuestRepository = missionToQuestRepository;
+            _missionRepository = missionRepository;
         }
 
         /// <summary>
@@ -195,7 +207,7 @@ namespace CityQuest.Services
         /// <exception cref="QuestException">There is no quest with such id.</exception>
         /// <exception cref="UserException">There is no user with such id.</exception>
         /// <exception cref="QuestToUserException">There is no quest to user with such id.</exception>
-        public async Task<int> GetQuestTasksDone(QuestToUserDto questToUser)
+        public async Task<TaskToUserDto> GetQuestTasksDone(QuestToUserDto questToUser)
         {
             Quest quest = (await _questRepository.GetAsync(q => q.ID == questToUser.QuestId)).FirstOrDefault();
 
@@ -215,10 +227,25 @@ namespace CityQuest.Services
             
             if (existingQuestToUser == null)
             {
-                throw new QuestToUserException(QuestToUserErrorCode.AlreadyExists);
+                throw new QuestToUserException(QuestToUserErrorCode.NotExist);
             }
 
-            return existingQuestToUser.FinishedTask;
+            int[] taskIds = (await _missionToQuestRepository.GetAsync(mq => mq.QuestID == questToUser.QuestId && mq.TaskNumber <= existingQuestToUser.FinishedTask)).Select(mq => mq.TaskID).ToArray();
+
+            TaskToUserDto.Task[] tasks = (await _missionRepository.GetAsync(m => taskIds.Contains(m.ID))).Select(m => new TaskToUserDto.Task
+            {
+                Id = m.ID,
+                Points = m.Points,
+                Text = m.Text
+            }).ToArray();
+
+            TaskToUserDto userTasks = new TaskToUserDto
+            {
+                Count = questToUser.FinishedTasks,
+                Tasks = tasks
+            };
+
+            return userTasks;
         }
     }
 }

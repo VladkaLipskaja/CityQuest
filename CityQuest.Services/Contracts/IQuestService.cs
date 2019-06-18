@@ -44,7 +44,7 @@ namespace CityQuest.Services
         /// <exception cref="QuestException">There is no quest with such id.</exception>
         /// <exception cref="UserException">There is no user with such id.</exception>
         /// <exception cref="QuestToUserException">There is no quest to user with such id.</exception>
-        Task<int> GetQuestTasksDone(QuestToUserDto questToUser);
+        Task<TaskToUserDto> GetQuestTasksDone(QuestToUserDto questToUser);
 
         /// <summary>
         /// Adds the quest to user asynchronous.

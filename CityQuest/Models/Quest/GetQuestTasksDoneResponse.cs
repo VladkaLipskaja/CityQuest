@@ -18,5 +18,16 @@ namespace CityQuest.Models.Quest
         /// The count.
         /// </value>
         public int Count { get; set; }
+
+        public Task[] Tasks { get; set; }
+
+        public class Task
+        {
+            public int Id { get; set; }
+
+            public int? Points { get; set; }
+
+            public string Text { get; set; }
+        }
     }
 }

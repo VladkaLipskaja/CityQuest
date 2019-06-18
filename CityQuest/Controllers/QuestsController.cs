@@ -241,7 +241,7 @@ namespace CityQuest.Controllers
         /// <returns>
         /// The number of tasks that done.
         /// </returns>
-        [HttpGet("{id}/tasks/done")]
+        [HttpGet("{questId}/tasks/done")]
         public async Task<JsonResult> GetQuestTasksDone(int questId)
         {
             try
@@ -254,11 +254,17 @@ namespace CityQuest.Controllers
                     UserId = userId
                 };
 
-                int count = await _questService.GetQuestTasksDone(questToUser);
+                TaskToUserDto tasks = await _questService.GetQuestTasksDone(questToUser);
 
                 GetQuestTasksDoneResponse response = new GetQuestTasksDoneResponse
                 {
-                    Count = count
+                    Count = tasks.Count,
+                    Tasks = tasks.Tasks.Select(t => new GetQuestTasksDoneResponse.Task
+                    {
+                        Id = t.Id,
+                        Points = t.Points,
+                        Text = t.Text
+                    }).ToArray()    
                 };
 
                 return this.JsonApi(response);
