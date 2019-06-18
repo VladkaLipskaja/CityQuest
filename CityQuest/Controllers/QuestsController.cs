@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CityQuest.Entities.Models;
 using CityQuest.Extensions;
 using CityQuest.Models.Dtos;
+using CityQuest.Models.Enums;
 using CityQuest.Models.Exceptions;
 using CityQuest.Models.Quest;
 using CityQuest.Services;
@@ -307,7 +308,7 @@ namespace CityQuest.Controllers
                 {
                     Name = request.Name,
                     AuthorID = userId,
-                    TopicID = request.TopicID,
+                    TopicID = request.TopicID == 0 ? (int)TopicEnum.Default : request.TopicID,
                     Points = request.Points,
                     Price = request.Price
                 };
