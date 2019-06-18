@@ -91,9 +91,9 @@ namespace CityQuest.Entities
             modelBuilder.ApplyConfiguration(new QuestMap());
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new TopicMap());
+            modelBuilder.ApplyConfiguration(new MissionToTopicMap());
             modelBuilder.ApplyConfiguration(new QuestToUserMap());
             modelBuilder.ApplyConfiguration(new MissionToQuestMap());
-            modelBuilder.ApplyConfiguration(new MissionToTopicMap());
 
             base.OnModelCreating(modelBuilder);
         }

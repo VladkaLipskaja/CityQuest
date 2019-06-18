@@ -443,5 +443,20 @@ namespace CityQuest.Controllers
                 return this.JsonApi(exception);
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<JsonResult> DeleteQuest(int id)
+        {
+            try
+            {
+                await _questService.DeleteQuestAsync(id);
+
+                return this.JsonApi();
+            }
+            catch (QuestException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
     }
 }

@@ -81,5 +81,7 @@ namespace CityQuest.Services
         Task<Quest[]> GetQuestsAsync();
 
         Task<Quest[]> GetUntouchedQuestsAsync();
+
+        Task DeleteQuestAsync(int id);
     }
 }

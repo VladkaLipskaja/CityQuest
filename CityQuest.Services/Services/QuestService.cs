@@ -346,5 +346,33 @@ namespace CityQuest.Services
 
             return userTasks;
         }
+
+        public async Task DeleteQuestAsync(int id)
+        {
+            var d = (await _questRepository.ListAllAsync()).ToArray();
+
+            Quest quest = await _questRepository.GetByIdAsync(id);
+
+            if (quest == null)
+            {
+                throw new QuestException(QuestErrorCode.NoSuchQuest);
+            }
+
+            QuestToUser[] questsToUsers = (await _questToUserRepository.GetAsync(q => q.QuestID == id)).ToArray();
+
+            if (questsToUsers != null && questsToUsers.Length > 0)
+            {
+                await _questToUserRepository.DeleteAsync(questsToUsers);
+            }
+
+            MissionToQuest[] missionsToQuests = (await _missionToQuestRepository.GetAsync(m => m.QuestID == id)).ToArray();
+
+            if (missionsToQuests != null && missionsToQuests.Length > 0)
+            {
+                await _missionToQuestRepository.DeleteAsync(missionsToQuests);
+            }
+
+            await _questRepository.DeleteAsync(quest);
+        }
     }
 }

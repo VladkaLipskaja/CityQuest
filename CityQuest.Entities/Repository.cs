@@ -108,5 +108,11 @@ namespace CityQuest.Entities
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(T[] entities)
+        {
+            _dbContext.Set<T>().RemoveRange(entities);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
