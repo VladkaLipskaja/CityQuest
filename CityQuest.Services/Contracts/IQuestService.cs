@@ -71,5 +71,7 @@ namespace CityQuest.Services
         Task UpdateQuestToUserAsync(QuestToUserDto questToUser);
 
         Task<Quest[]> GetUserQuestsAsync(int userId);
+
+        Task IncreaseUserQuestsTaskAsync(QuestToUserDto questToUser);
     }
 }

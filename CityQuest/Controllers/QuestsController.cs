@@ -114,7 +114,34 @@ namespace CityQuest.Controllers
 
                 return this.JsonApi(response);
             }
-            catch (QuestException exception)
+            catch (UserException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
+
+        [HttpPut("{questId}")]
+        public async Task<JsonResult> IncreaseUserQuestTasks(int questId)
+        {
+            try
+            {
+                int userId = _securityService.GetUserId(User);
+
+                QuestToUserDto questToUserDto = new QuestToUserDto
+                {
+                    UserId = userId,
+                    QuestId = questId
+                };
+
+                await _questService.IncreaseUserQuestsTaskAsync(questToUserDto);
+
+                return this.JsonApi();
+            }
+            catch (UserException exception)
+            {
+                return this.JsonApi(exception);
+            }
+            catch (MissionToQuestException exception)
             {
                 return this.JsonApi(exception);
             }

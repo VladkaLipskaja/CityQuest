@@ -107,6 +107,34 @@ namespace CityQuest.Services
             return quests;
         }
 
+        public async Task IncreaseUserQuestsTaskAsync(QuestToUserDto questToUser)
+        {
+            User user = (await _userRepository.GetAsync(u => u.ID == questToUser.UserId)).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new UserException(UserErrorCode.NoSuchUser);
+            }
+
+            QuestToUser existedQuestToUser = (await _questToUserRepository.GetAsync(qu => qu.QuestID == questToUser.QuestId && qu.UserID == questToUser.UserId)).FirstOrDefault();
+
+            if (existedQuestToUser == null)
+            {
+                throw new QuestToUserException(QuestToUserErrorCode.NotExist);
+            }
+
+            MissionToQuest missionToQuest = (await _missionToQuestRepository.GetAsync(qu => qu.QuestID == questToUser.QuestId)).OrderByDescending(qu => qu.TaskNumber).FirstOrDefault();
+
+            if (missionToQuest == null || missionToQuest.TaskNumber <= existedQuestToUser.FinishedTask)
+            {
+                throw new MissionToQuestException(MissionToQuestErrorCode.LastMission);
+            }
+
+            existedQuestToUser.FinishedTask++;
+
+            await _questToUserRepository.UpdateAsync(existedQuestToUser);
+        }
+
         /// <summary>
         /// Adds the quest asynchronous.
         /// </summary>
