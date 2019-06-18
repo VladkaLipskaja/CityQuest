@@ -26,7 +26,7 @@ namespace CityQuest.Models.Exceptions
         /// </summary>
         private static Dictionary<MissionErrorCode, string> errorCodeToMessage = new Dictionary<MissionErrorCode, string>
         {
-            { MissionErrorCode.NoSuchMission, "Are you sure? I can't find such quest:(" }
+            { MissionErrorCode.NoSuchMission, "Are you sure? I can't find such mission:(" }
         };
 
         /// <summary>
