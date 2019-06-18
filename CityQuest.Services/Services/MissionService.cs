@@ -111,7 +111,7 @@ namespace CityQuest.Services
         }
 
         public async Task<Mission[]> GetMissions()
-        {           
+        {
             Mission[] missions = (await _missionRepository.ListAllAsync()).ToArray();
 
             return missions;
@@ -139,14 +139,17 @@ namespace CityQuest.Services
 
             await _missionRepository.AddAsync(newMission);
 
-            MissionToQuest missionToQuest = new MissionToQuest
+            if (mission.QuestId.HasValue)
             {
-                TaskNumber = mission.TaskNumber,
-                QuestID = mission.QuestId,
-                TaskID = newMission.ID
-            };
+                MissionToQuest missionToQuest = new MissionToQuest
+                {
+                    TaskNumber = mission.TaskNumber,
+                    QuestID = mission.QuestId.Value,
+                    TaskID = newMission.ID
+                };
 
-            await _missionToQuestRepository.AddAsync(missionToQuest);
+                await _missionToQuestRepository.AddAsync(missionToQuest);
+            }
 
             return newMission.ID;
         }

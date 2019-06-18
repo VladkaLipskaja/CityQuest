@@ -73,7 +73,7 @@ namespace CityQuest.Models.Mission
         /// <value>
         /// The quest identifier.
         /// </value>
-        public int QuestID { get; set; }
+        public int? QuestID { get; set; }
 
         /// <summary>
         /// Gets or sets the task number.
@@ -81,6 +81,6 @@ namespace CityQuest.Models.Mission
         /// <value>
         /// The task number.
         /// </value>
-        public int TaskNumber { get; set; }
+        public int? TaskNumber { get; set; }
     }
 }

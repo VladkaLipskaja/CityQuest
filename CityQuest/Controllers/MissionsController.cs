@@ -56,7 +56,7 @@ namespace CityQuest.Controllers
         /// </returns>
         /// <exception cref="System.ArgumentNullException">Invalid request.</exception>
         [HttpPost]
-        public async Task<JsonResult> AddMission(AddMissionRequest request)
+        public async Task<JsonResult> AddMission([FromBody]AddMissionRequest request)
         {
             if (request == null)
             {
@@ -82,7 +82,12 @@ namespace CityQuest.Controllers
 
                 int id = await _missionService.AddMissionAsync(quest);
 
-                return this.JsonApi(id);
+                AddMissionResponse response = new AddMissionResponse
+                {
+                    MissionID = id
+                };
+
+                return this.JsonApi(response);
             }
             catch (SecurityException exception)
             {

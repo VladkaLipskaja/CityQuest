@@ -73,7 +73,7 @@ namespace CityQuest.Models.Dtos
         /// <value>
         /// The task number.
         /// </value>
-        public int TaskNumber { get; set; }
+        public int? TaskNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the quest identifier.
@@ -81,6 +81,6 @@ namespace CityQuest.Models.Dtos
         /// <value>
         /// The quest identifier.
         /// </value>
-        public int QuestId { get; set; }
+        public int? QuestId { get; set; }
     }
 }
