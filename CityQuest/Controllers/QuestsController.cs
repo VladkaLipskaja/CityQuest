@@ -92,6 +92,12 @@ namespace CityQuest.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the quests.
+        /// </summary>
+        /// <returns>
+        /// A list of quests.
+        /// </returns>
         [HttpGet]
         public async Task<JsonResult> GetQuests()
         {
@@ -111,6 +117,12 @@ namespace CityQuest.Controllers
             return this.JsonApi(response);
         }
 
+        /// <summary>
+        /// Gets the untouched quests.
+        /// </summary>
+        /// <returns>
+        /// The list of untouched quests.
+        /// </returns>
         [HttpGet("untouched")]
         public async Task<JsonResult> GetUntouchedQuests()
         {
@@ -130,6 +142,12 @@ namespace CityQuest.Controllers
             return this.JsonApi(response);
         }
 
+        /// <summary>
+        /// Gets the user quests.
+        /// </summary>
+        /// <returns>
+        /// A list of user's quests.
+        /// </returns>
         [HttpGet("user")]
         public async Task<JsonResult> GetUserQuests()
         {
@@ -138,8 +156,7 @@ namespace CityQuest.Controllers
                 int userId = _securityService.GetUserId(User);
 
                 Quest[] quests = await _questService.GetUserQuestsAsync(userId);
-
-
+                
                 GetUserQuestsResponse response = new GetUserQuestsResponse
                 {
                     Quests = quests?.Select(q => new GetUserQuestsResponse.Quest
@@ -158,6 +175,12 @@ namespace CityQuest.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the last quest.
+        /// </summary>
+        /// <returns>
+        /// Last added quest.
+        /// </returns>
         [HttpGet("last")]
         public async Task<JsonResult> GetLastQuest()
         {
@@ -181,6 +204,13 @@ namespace CityQuest.Controllers
             }
         }
 
+        /// <summary>
+        /// Quests the task is last.
+        /// </summary>
+        /// <param name="questId">The quest identifier.</param>
+        /// <returns>
+        /// The indicator of last mission.
+        /// </returns>
         [HttpGet("{questId}/is-last")]
         public async Task<JsonResult> QuestTaskIsLast(int questId)
         {
@@ -217,6 +247,13 @@ namespace CityQuest.Controllers
             }
         }
 
+        /// <summary>
+        /// Increases the user quest tasks.
+        /// </summary>
+        /// <param name="questId">The quest identifier.</param>
+        /// <returns>
+        /// The success indicator.
+        /// </returns>
         [HttpPut("{questId}")]
         public async Task<JsonResult> IncreaseUserQuestTasks(int questId)
         {
@@ -293,11 +330,12 @@ namespace CityQuest.Controllers
         /// <summary>
         /// Adds the quest to user.
         /// </summary>
+        /// <param name="questId">The quest identifier.</param>
         /// <param name="request">The request.</param>
         /// <returns>
         /// The success indicator.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">Invalid request.</exception>
+        /// <exception cref="ArgumentNullException">Invalid request.</exception>
         [HttpPost("{questId}/user")]
         public async Task<JsonResult> AddQuestToUser(int questId, [FromBody]AddQuestToUserRequest request)
         {
@@ -444,6 +482,13 @@ namespace CityQuest.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes the quest.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// The success indicator.
+        /// </returns>
         [HttpDelete("{id}")]
         public async Task<JsonResult> DeleteQuest(int id)
         {

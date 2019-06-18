@@ -30,7 +30,7 @@ namespace CityQuest.Models.Exceptions
         };
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="QuestException"/> class.
+        /// Initializes a new instance of the <see cref="MissionToQuestException" /> class.
         /// </summary>
         /// <param name="errorCode">The error code.</param>
         public MissionToQuestException(MissionToQuestErrorCode errorCode)

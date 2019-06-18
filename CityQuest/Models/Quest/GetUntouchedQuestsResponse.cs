@@ -1,9 +1,27 @@
-﻿namespace CityQuest.Models.Quest
+﻿//-----------------------------------------------------------------------
+// <copyright file="GetUntouchedQuestsResponse.cs" company="Dream Team">
+//     Copyright (c) Dream Team. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace CityQuest.Models.Quest
 {
+    /// <summary>
+    /// The response model for GetUntouchedQuests method.
+    /// </summary>
     public class GetUntouchedQuestsResponse
     {
+        /// <summary>
+        /// Gets or sets the quests.
+        /// </summary>
+        /// <value>
+        /// The quests.
+        /// </value>
         public Quest[] Quests { get; set; }
 
+        /// <summary>
+        /// Quest model.
+        /// </summary>
         public class Quest
         {
             /// <summary>

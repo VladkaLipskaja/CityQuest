@@ -51,6 +51,11 @@ namespace CityQuest.Entities
         /// <returns>The method is void.</returns>
         Task DeleteAsync(T entity);
 
+        /// <summary>
+        /// Deletes the asynchronous.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
+        /// <returns>The method is void.</returns>
         Task DeleteAsync(T[] entities);
 
         /// <summary>

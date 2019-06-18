@@ -1,14 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="GetUserQuestsResponse.cs" company="Dream Team">
+//     Copyright (c) Dream Team. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace CityQuest.Models.Quest
 {
+    /// <summary>
+    /// The response model for GetUserQuests method.
+    /// </summary>
     public class GetUserQuestsResponse
     {
+        /// <summary>
+        /// Gets or sets the quests.
+        /// </summary>
+        /// <value>
+        /// The quests.
+        /// </value>
         public Quest[] Quests { get; set; }
 
+        /// <summary>
+        /// Quest class.
+        /// </summary>
         public class Quest
         {
             /// <summary>

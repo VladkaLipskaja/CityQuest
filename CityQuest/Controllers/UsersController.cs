@@ -34,9 +34,10 @@ namespace GreenSens.Api.Controllers
         private ISecurityService _securityService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// Initializes a new instance of the <see cref="UsersController" /> class.
         /// </summary>
         /// <param name="userService">The user service.</param>
+        /// <param name="securityService">The security service.</param>
         public UsersController(IUserService userService, ISecurityService securityService)
         {
             _userService = userService;
@@ -119,6 +120,14 @@ namespace GreenSens.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Sets the user points.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// The success indicator.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Request is null.</exception>
         [HttpPut("points")]
         public async Task<JsonResult> SetUserPoints([FromBody]SetUserPointsRequest request)
         {

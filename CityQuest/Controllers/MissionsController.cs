@@ -95,6 +95,16 @@ namespace CityQuest.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds the mission to quest.
+        /// </summary>
+        /// <param name="missionId">The mission identifier.</param>
+        /// <param name="questId">The quest identifier.</param>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// The success indicator.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Request is null.</exception>
         [HttpPost("{missionId}/quest/{questId}")]
         public async Task<JsonResult> AddMissionToQuest(int missionId, int questId, [FromBody]AddMissionToQuestRequest request)
         {
@@ -125,8 +135,13 @@ namespace CityQuest.Controllers
                 return this.JsonApi(exception);
             }
         }
-
-
+        
+        /// <summary>
+        /// Gets the missions.
+        /// </summary>
+        /// <returns>
+        /// A list of missions.
+        /// </returns>
         [HttpGet]
         public async Task<JsonResult> GetMissions()
         {
@@ -150,6 +165,12 @@ namespace CityQuest.Controllers
             return this.JsonApi(response);
         }
 
+        /// <summary>
+        /// Gets the untouched missions.
+        /// </summary>
+        /// <returns>
+        /// A list of untouched missions.
+        /// </returns>
         [HttpGet("untouched")]
         public async Task<JsonResult> GetUntouchedMissions()
         {
@@ -173,6 +194,13 @@ namespace CityQuest.Controllers
             return this.JsonApi(response);
         }
 
+        /// <summary>
+        /// Gets the last quest tasks.
+        /// </summary>
+        /// <param name="questId">The quest identifier.</param>
+        /// <returns>
+        /// A list of last missions.
+        /// </returns>
         [HttpGet("quest/{questId}")]
         public async Task<JsonResult> GetLastQuestTasks(int questId)
         {
@@ -214,6 +242,32 @@ namespace CityQuest.Controllers
                 return this.JsonApi(exception);
             }
             catch (QuestException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the mission.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// The success indicator.
+        /// </returns>
+        [HttpDelete("{id}")]
+        public async Task<JsonResult> DeleteMission(int id)
+        {
+            try
+            {
+                await _missionService.DeleteMission(id);
+
+                return this.JsonApi();
+            }
+            catch (MissionException exception)
+            {
+                return this.JsonApi(exception);
+            }
+            catch (Exception exception)
             {
                 return this.JsonApi(exception);
             }

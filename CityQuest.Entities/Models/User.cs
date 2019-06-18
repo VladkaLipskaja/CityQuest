@@ -68,6 +68,12 @@ namespace CityQuest.Entities.Models
         /// </value>
         public bool IsAdmin { get; set; }
 
+        /// <summary>
+        /// Gets or sets the points.
+        /// </summary>
+        /// <value>
+        /// The points.
+        /// </value>
         public int? Points { get; set; }
     }
 }

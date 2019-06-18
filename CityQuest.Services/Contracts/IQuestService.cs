@@ -70,18 +70,62 @@ namespace CityQuest.Services
         /// <exception cref="QuestToUserException">There is no quest to user with such id.</exception>
         Task UpdateQuestToUserAsync(QuestToUserDto questToUser);
 
+        /// <summary>
+        /// Gets the user quests asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        /// The array of user's quests.
+        /// </returns>
         Task<Quest[]> GetUserQuestsAsync(int userId);
 
+        /// <summary>
+        /// Increases the user quests task asynchronous.
+        /// </summary>
+        /// <param name="questToUser">The quest to user.</param>
+        /// <returns>The method is void.</returns>
         Task IncreaseUserQuestsTaskAsync(QuestToUserDto questToUser);
 
+        /// <summary>
+        /// Quests the task is last.
+        /// </summary>
+        /// <param name="questToUser">The quest to user.</param>
+        /// <returns>
+        /// The indicator if the quest is last.
+        /// </returns>
         Task<bool> QuestTaskIsLast(QuestToUserDto questToUser);
 
+        /// <summary>
+        /// Gets the last quest asynchronous.
+        /// </summary>
+        /// <returns>
+        /// The last added quest.
+        /// </returns>
         Task<Quest> GetLastQuestAsync();
 
+        /// <summary>
+        /// Gets the quests asynchronous.
+        /// </summary>
+        /// <returns>
+        /// The array of quests.
+        /// </returns>
         Task<Quest[]> GetQuestsAsync();
 
+        /// <summary>
+        /// Gets the untouched quests asynchronous.
+        /// </summary>
+        /// <returns>
+        /// The array of untouched quests.
+        /// </returns>
         Task<Quest[]> GetUntouchedQuestsAsync();
 
+        /// <summary>
+        /// Deletes the quest asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// The method is void.
+        /// </returns>
         Task DeleteQuestAsync(int id);
     }
 }

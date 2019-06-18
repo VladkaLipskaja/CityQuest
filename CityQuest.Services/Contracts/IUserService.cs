@@ -43,6 +43,13 @@ namespace CityQuest.Services
         /// </returns>
         Task<User> GetUserDataAsync(int id);
 
-        Task SetUserPoints(UserPointsDto userPointsDto);
+        /// <summary>
+        /// Sets the user points.
+        /// </summary>
+        /// <param name="userPoints">The user points.</param>
+        /// <returns>
+        /// The method is void.
+        /// </returns>
+        Task SetUserPoints(UserPointsDto userPoints);
     }
 }

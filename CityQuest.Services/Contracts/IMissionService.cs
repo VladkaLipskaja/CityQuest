@@ -43,5 +43,7 @@ namespace CityQuest.Services
         Task AddMissionToQuestAsync(MissionToQuestDto mission);
 
         Task<Mission[]> GetUntouchedMissions();
+
+        Task DeleteMission(int id);
     }
 }

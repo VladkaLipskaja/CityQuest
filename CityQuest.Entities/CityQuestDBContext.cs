@@ -64,6 +64,22 @@ namespace CityQuest.Entities
         public DbSet<Topic> Topics { get; set; }
 
         /// <summary>
+        /// Gets or sets the mission to topics.
+        /// </summary>
+        /// <value>
+        /// The mission to topics.
+        /// </value>
+        public DbSet<MissionToTopic> MissionToTopics { get; set; }
+
+        /// <summary>
+        /// Gets or sets the task to topics.
+        /// </summary>
+        /// <value>
+        /// The task to topics.
+        /// </value>
+        public DbSet<MissionToTopic> TaskToTopics { get; set; }
+        
+        /// <summary>
         /// Initializes a new instance of the <see cref="CityQuestDBContext"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
@@ -91,9 +107,9 @@ namespace CityQuest.Entities
             modelBuilder.ApplyConfiguration(new QuestMap());
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new TopicMap());
-            modelBuilder.ApplyConfiguration(new MissionToTopicMap());
             modelBuilder.ApplyConfiguration(new QuestToUserMap());
             modelBuilder.ApplyConfiguration(new MissionToQuestMap());
+            modelBuilder.ApplyConfiguration(new MissionToTopicMap());
 
             base.OnModelCreating(modelBuilder);
         }

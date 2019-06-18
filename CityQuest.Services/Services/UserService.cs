@@ -119,6 +119,14 @@ namespace CityQuest.Services
             return user;
         }
 
+        /// <summary>
+        /// Sets the user points.
+        /// </summary>
+        /// <param name="userPoints">The user points.</param>
+        /// <returns>
+        /// The method is void.
+        /// </returns>
+        /// <exception cref="UserException">Invalid userId.</exception>
         public async Task SetUserPoints(UserPointsDto userPoints)
         {
             User user = (await _userRepository.GetAsync(u => u.ID == userPoints.UserId)).FirstOrDefault();

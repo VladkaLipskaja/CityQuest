@@ -51,6 +51,7 @@ namespace CityQuest.Entities
         /// <returns>The list of entities.</returns>
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
+            var k = _dbContext.Set<T>();
             return await _dbContext.Set<T>().Where(predicate).ToListAsync();
         }
 
@@ -109,6 +110,13 @@ namespace CityQuest.Entities
             await _dbContext.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Deletes the asynchronous.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
+        /// <returns>
+        /// The method is void.
+        /// </returns>
         public async Task DeleteAsync(T[] entities)
         {
             _dbContext.Set<T>().RemoveRange(entities);

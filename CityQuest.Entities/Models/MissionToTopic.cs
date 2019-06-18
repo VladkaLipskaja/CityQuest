@@ -13,20 +13,20 @@ namespace CityQuest.Entities.Models
     public class MissionToTopic : MissionToTopicBase
     {
         /// <summary>
-        /// Gets or sets the topic.
-        /// </summary>
-        /// <value>
-        /// The topic.
-        /// </value>
-        public virtual Topic Topic { get; set; }
-
-        /// <summary>
         /// Gets or sets the task.
         /// </summary>
         /// <value>
         /// The task.
         /// </value>
         public virtual Mission Task { get; set; }
+
+        /// <summary>
+        /// Gets or sets the topic.
+        /// </summary>
+        /// <value>
+        /// The topic.
+        /// </value>
+        public virtual Topic Topic { get; set; }
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ namespace CityQuest.Entities.Models
         /// <value>
         /// The topic identifier.
         /// </value>
-        public int TopicID { get; set; }
+        public int TopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the task identifier.
@@ -48,6 +48,6 @@ namespace CityQuest.Entities.Models
         /// <value>
         /// The task identifier.
         /// </value>
-        public int TaskID { get; set; }
+        public int TaskId { get; set; }
     }
 }

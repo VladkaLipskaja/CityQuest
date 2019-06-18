@@ -1,5 +1,14 @@
-﻿namespace CityQuest.Models.Quest
+﻿//-----------------------------------------------------------------------
+// <copyright file="GetLastQuestResponse.cs" company="Dream Team">
+//     Copyright (c) Dream Team. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace CityQuest.Models.Quest
 {
+    /// <summary>
+    /// The response model for GetLastQuest method.
+    /// </summary>
     public class GetLastQuestResponse
     {
         /// <summary>

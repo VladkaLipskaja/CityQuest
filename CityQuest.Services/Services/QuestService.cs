@@ -59,6 +59,8 @@ namespace CityQuest.Services
         /// <param name="questToUserRepository">The quest to user repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="topicRepository">The topic repository.</param>
+        /// <param name="missionToQuestRepository">The mission to quest repository.</param>
+        /// <param name="missionRepository">The mission repository.</param>
         public QuestService(IRepository<Quest> questRepository, IRepository<QuestToUser> questToUserRepository, IRepository<User> userRepository, IRepository<Topic> topicRepository, IRepository<MissionToQuest> missionToQuestRepository, IRepository<Mission> missionRepository)
         {
             _userRepository = userRepository;
@@ -91,6 +93,12 @@ namespace CityQuest.Services
             return quests;
         }
 
+        /// <summary>
+        /// Gets the quests asynchronous.
+        /// </summary>
+        /// <returns>
+        /// The array of quests.
+        /// </returns>
         public async Task<Quest[]> GetQuestsAsync()
         {
             Quest[] quests = (await _questRepository.ListAllAsync()).ToArray();
@@ -98,6 +106,12 @@ namespace CityQuest.Services
             return quests;
         }
 
+        /// <summary>
+        /// Gets the untouched quests asynchronous.
+        /// </summary>
+        /// <returns>
+        /// The array of untouched quests.
+        /// </returns>
         public async Task<Quest[]> GetUntouchedQuestsAsync()
         {
             int[] touchedQuestIds = (await _questToUserRepository.ListAllAsync()).Select(q => q.QuestID).ToArray();
@@ -107,6 +121,13 @@ namespace CityQuest.Services
             return quests;
         }
 
+        /// <summary>
+        /// Gets the last quest asynchronous.
+        /// </summary>
+        /// <returns>
+        /// The last quest.
+        /// </returns>
+        /// <exception cref="QuestException">Invalid questId.</exception>
         public async Task<Quest> GetLastQuestAsync()
         {
             Quest quest = (await _questRepository.ListAllAsync()).OrderByDescending(q => q.ID).FirstOrDefault();
@@ -119,6 +140,14 @@ namespace CityQuest.Services
             return quest;
         }
 
+        /// <summary>
+        /// Gets the user quests asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        /// The array of user's quests.
+        /// </returns>
+        /// <exception cref="UserException">Invalid userId.</exception>
         public async Task<Quest[]> GetUserQuestsAsync(int userId)
         {
             User user = (await _userRepository.GetAsync(u => u.ID == userId)).FirstOrDefault();
@@ -135,6 +164,14 @@ namespace CityQuest.Services
             return quests;
         }
 
+        /// <summary>
+        /// Increases the user quests task asynchronous.
+        /// </summary>
+        /// <param name="questToUser">The quest to user.</param>
+        /// <returns>The method is void.</returns>
+        /// <exception cref="UserException">Invalid userId.</exception>
+        /// <exception cref="QuestToUserException">Invalid questId or userId.</exception>
+        /// <exception cref="MissionToQuestException">Invalid missionId or questId.</exception>
         public async Task IncreaseUserQuestsTaskAsync(QuestToUserDto questToUser)
         {
             User user = (await _userRepository.GetAsync(u => u.ID == questToUser.UserId)).FirstOrDefault();
@@ -163,6 +200,16 @@ namespace CityQuest.Services
             await _questToUserRepository.UpdateAsync(existedQuestToUser);
         }
 
+        /// <summary>
+        /// Quests the task is last.
+        /// </summary>
+        /// <param name="questToUser">The quest to user.</param>
+        /// <returns>
+        /// The indicator if the quest is last.
+        /// </returns>
+        /// <exception cref="UserException">Invalid userId.</exception>
+        /// <exception cref="QuestToUserException">Invalid questId or userId.</exception>
+        /// <exception cref="MissionToQuestException">Invalid missionId or questId.</exception>
         public async Task<bool> QuestTaskIsLast(QuestToUserDto questToUser)
         {
             User user = (await _userRepository.GetAsync(u => u.ID == questToUser.UserId)).FirstOrDefault();
@@ -347,6 +394,14 @@ namespace CityQuest.Services
             return userTasks;
         }
 
+        /// <summary>
+        /// Deletes the quest asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// The method is void.
+        /// </returns>
+        /// <exception cref="QuestException">Invalid questId.</exception>
         public async Task DeleteQuestAsync(int id)
         {
             var d = (await _questRepository.ListAllAsync()).ToArray();

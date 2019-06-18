@@ -30,8 +30,14 @@ namespace CityQuest.Services
         /// </summary>
         private readonly IRepository<Quest> _questRepository;
 
+        /// <summary>
+        /// The quest to user repository
+        /// </summary>
         private readonly IRepository<QuestToUser> _questToUserRepository;
 
+        /// <summary>
+        /// The user repository
+        /// </summary>
         private readonly IRepository<User> _userRepository;
 
         /// <summary>
@@ -39,21 +45,30 @@ namespace CityQuest.Services
         /// </summary>
         private readonly IRepository<Mission> _missionRepository;
 
+        /// <summary>
+        /// The mission to topic repository
+        /// </summary>
+        private readonly IRepository<MissionToTopic> _missionToTopicRepository;
+
         // private readonly IAppLogger<BasketService> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MissionService"/> class.
+        /// Initializes a new instance of the <see cref="MissionService" /> class.
         /// </summary>
         /// <param name="missionToQuestRepository">The mission to quest repository.</param>
         /// <param name="missionRepository">The mission repository.</param>
         /// <param name="questRepository">The quest repository.</param>
-        public MissionService(IRepository<MissionToQuest> missionToQuestRepository, IRepository<Mission> missionRepository, IRepository<Quest> questRepository, IRepository<User> userRepository, IRepository<QuestToUser> questToUserRepository)
+        /// <param name="userRepository">The user repository.</param>
+        /// <param name="questToUserRepository">The quest to user repository.</param>
+        /// <param name="missionToTopicRepository">The mission to topic repository.</param>
+        public MissionService(IRepository<MissionToQuest> missionToQuestRepository, IRepository<Mission> missionRepository, IRepository<Quest> questRepository, IRepository<User> userRepository, IRepository<QuestToUser> questToUserRepository, IRepository<MissionToTopic> missionToTopicRepository)
         {
             _questRepository = questRepository;
             _missionToQuestRepository = missionToQuestRepository;
             _missionRepository = missionRepository;
             _userRepository = userRepository;
             _questToUserRepository = questToUserRepository;
+            _missionToTopicRepository = missionToTopicRepository;
         }
 
         /// <summary>
@@ -80,6 +95,16 @@ namespace CityQuest.Services
             return missions;
         }
 
+        /// <summary>
+        /// Gets the last done missions.
+        /// </summary>
+        /// <param name="questToUser">The quest to user.</param>
+        /// <returns>
+        /// The array of last done missions.
+        /// </returns>
+        /// <exception cref="UserException">Invalid userId.</exception>
+        /// <exception cref="QuestException">Invalid questId.</exception>
+        /// <exception cref="QuestToUserException">Invalid userId or questId.</exception>
         public async Task<Mission[]> GetLastDoneMissions(QuestToUserDto questToUser)
         {
             User user = (await _userRepository.GetAsync(u => u.ID == questToUser.UserId)).FirstOrDefault();
@@ -110,6 +135,12 @@ namespace CityQuest.Services
             return missions;
         }
 
+        /// <summary>
+        /// Gets the missions.
+        /// </summary>
+        /// <returns>
+        /// The array of missions.
+        /// </returns>
         public async Task<Mission[]> GetMissions()
         {
             Mission[] missions = (await _missionRepository.ListAllAsync()).ToArray();
@@ -117,6 +148,12 @@ namespace CityQuest.Services
             return missions;
         }
 
+        /// <summary>
+        /// Gets the untouched missions.
+        /// </summary>
+        /// <returns>
+        /// The array of untouched missions.
+        /// </returns>
         public async Task<Mission[]> GetUntouchedMissions()
         {
             int[] touchedMissionIds = (await _missionToQuestRepository.ListAllAsync()).Select(m => m.TaskID).ToArray();
@@ -126,6 +163,15 @@ namespace CityQuest.Services
             return missions;
         }
 
+        /// <summary>
+        /// Adds the mission to quest asynchronous.
+        /// </summary>
+        /// <param name="mission">The mission.</param>
+        /// <returns>
+        /// The method is void.
+        /// </returns>
+        /// <exception cref="MissionException">Invalid missionId.</exception>
+        /// <exception cref="QuestException">Invalid questId.</exception>
         public async Task AddMissionToQuestAsync(MissionToQuestDto mission)
         {
             Mission existingMission = (await _missionRepository.GetAsync(m => m.ID == mission.TaskID)).FirstOrDefault();
@@ -194,6 +240,40 @@ namespace CityQuest.Services
             }
 
             return newMission.ID;
+        }
+
+        /// <summary>
+        /// Deletes the mission.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// The method is void.
+        /// </returns>
+        /// <exception cref="MissionException">Invalid missionId.</exception>
+        public async Task DeleteMission(int id)
+        {
+            Mission mission = await _missionRepository.GetByIdAsync(id);
+
+            if (mission == null)
+            {
+                throw new MissionException(MissionErrorCode.NoSuchMission);
+            }
+
+            MissionToQuest[] missionsToQuests = (await _missionToQuestRepository.GetAsync(m => m.TaskID == id)).ToArray();
+
+            if (missionsToQuests != null && missionsToQuests.Length > 0)
+            {
+                await _missionToQuestRepository.DeleteAsync(missionsToQuests);
+            }
+
+            MissionToTopic[] missionToTopics = (await _missionToTopicRepository.GetAsync(m => m.TaskId == id)).ToArray();
+
+            if (missionToTopics != null && missionToTopics.Length > 0)
+            {
+                await _missionToTopicRepository.DeleteAsync(missionToTopics);
+            }
+
+            await _missionRepository.DeleteAsync(mission);
         }
     }
 }

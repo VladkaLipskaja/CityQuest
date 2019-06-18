@@ -1,9 +1,27 @@
-﻿namespace CityQuest.Models.Mission
+﻿//-----------------------------------------------------------------------
+// <copyright file="GetMissionsResponse.cs" company="Dream Team">
+//     Copyright (c) Dream Team. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace CityQuest.Models.Mission
 {
+    /// <summary>
+    /// The response model for GetMissions method.
+    /// </summary>
     public class GetMissionsResponse
     {
+        /// <summary>
+        /// Gets or sets the missions.
+        /// </summary>
+        /// <value>
+        /// The missions.
+        /// </value>
         public Mission[] Missions { get; set; }
 
+        /// <summary>
+        /// Mission class.
+        /// </summary>
         public class Mission
         {
             /// <summary>

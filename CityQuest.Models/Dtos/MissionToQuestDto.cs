@@ -1,9 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MissionToQuestDto.cs" company="Dream Team">
+//     Copyright (c) Dream Team. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace CityQuest.Models.Dtos
 {
+    /// <summary>
+    /// MissionToQuest data transfer object.
+    /// </summary>
     public class MissionToQuestDto
     {
         /// <summary>
