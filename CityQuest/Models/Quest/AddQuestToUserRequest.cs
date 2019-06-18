@@ -12,14 +12,6 @@ namespace CityQuest.Models.Quest
     public class AddQuestToUserRequest
     {
         /// <summary>
-        /// Gets or sets the quest identifier.
-        /// </summary>
-        /// <value>
-        /// The quest identifier.
-        /// </value>
-        public int QuestId { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether this instance is finished.
         /// </summary>
         /// <value>

@@ -142,8 +142,8 @@ namespace CityQuest.Controllers
         /// The success indicator.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">Invalid request.</exception>
-        [HttpPost("{id}/user")]
-        public async Task<JsonResult> AddQuestToUser(AddQuestToUserRequest request)
+        [HttpPost("{questId}/user")]
+        public async Task<JsonResult> AddQuestToUser(int questId, [FromBody]AddQuestToUserRequest request)
         {
             if (request == null)
             {
@@ -156,7 +156,7 @@ namespace CityQuest.Controllers
 
                 QuestToUserDto questToUser = new QuestToUserDto
                 {
-                    QuestId = request.QuestId,
+                    QuestId = questId,
                     FinishedTasks = request.FinishedTasks,
                     IsFinished = request.IsFinished,
                     UserId = userId

@@ -29,7 +29,7 @@ namespace CityQuest.Entities.Models
 
             builder.Property(t => t.QuestID).HasColumnName("questid");
             builder.Property(t => t.UserID).HasColumnName("userid");
-            builder.Property(t => t.FinishedTask).HasColumnName("finishedtask");
+            builder.Property(t => t.FinishedTask).HasColumnName("finishedtasks");
             builder.Property(t => t.IsFinished).HasColumnName("isfinished");
 
             builder.HasOne(t => t.Quest).WithMany(t => t.QuestToUsers).HasForeignKey(t => t.QuestID);
