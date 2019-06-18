@@ -89,7 +89,38 @@ namespace CityQuest.Controllers
 
                 return this.JsonApi(response);
             }
-            catch (SecurityException exception)
+            catch (QuestException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
+
+        [HttpPost("{missionId}/quest/{questId}")]
+        public async Task<JsonResult> AddMissionToQuest(int missionId, int questId, [FromBody]AddMissionToQuestRequest request)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            try
+            {
+                MissionToQuestDto missionToQuest = new MissionToQuestDto
+                {
+                    QuestID = questId,
+                    TaskID = missionId,
+                    TaskNumber = request.TaskNumber
+                };
+
+                await _missionService.AddMissionToQuestAsync(missionToQuest);
+
+                return this.JsonApi();
+            }
+            catch (QuestException exception)
+            {
+                return this.JsonApi(exception);
+            }
+            catch (MissionException exception)
             {
                 return this.JsonApi(exception);
             }

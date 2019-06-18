@@ -39,5 +39,7 @@ namespace CityQuest.Services
         Task<Mission[]> GetLastDoneMissions(QuestToUserDto questToUser);
 
         Task<Mission[]> GetMissions();
+
+        Task AddMissionToQuestAsync(MissionToQuestDto mission);
     }
 }

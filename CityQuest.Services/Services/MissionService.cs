@@ -117,6 +117,32 @@ namespace CityQuest.Services
             return missions;
         }
 
+        public async Task AddMissionToQuestAsync(MissionToQuestDto mission)
+        {
+            Mission existingMission = (await _missionRepository.GetAsync(m => m.ID == mission.TaskID)).FirstOrDefault();
+
+            if (existingMission == null)
+            {
+                throw new MissionException(MissionErrorCode.NoSuchMission);
+            }
+
+            Quest quest = (await _questRepository.GetAsync(u => u.ID == mission.QuestID)).FirstOrDefault();
+
+            if (quest == null)
+            {
+                throw new QuestException(QuestErrorCode.NoSuchQuest);
+            }
+
+            MissionToQuest missionToQuest = new MissionToQuest
+            {
+                TaskNumber = mission.TaskNumber,
+                QuestID = mission.QuestID,
+                TaskID = mission.TaskID
+            };
+
+            await _missionToQuestRepository.AddAsync(missionToQuest);
+        }
+
         /// <summary>
         /// Adds the mission asynchronous.
         /// </summary>
@@ -141,6 +167,13 @@ namespace CityQuest.Services
 
             if (mission.QuestId.HasValue)
             {
+                Quest quest = (await _questRepository.GetAsync(u => u.ID == mission.QuestId)).FirstOrDefault();
+
+                if (quest == null)
+                {
+                    throw new QuestException(QuestErrorCode.NoSuchQuest);
+                }
+
                 MissionToQuest missionToQuest = new MissionToQuest
                 {
                     TaskNumber = mission.TaskNumber,
