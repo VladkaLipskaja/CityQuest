@@ -120,6 +120,29 @@ namespace CityQuest.Controllers
             }
         }
 
+        [HttpGet("last")]
+        public async Task<JsonResult> GetLastQuest()
+        {
+            try
+            {
+                Quest quest = await _questService.GetLastQuestAsync();
+
+                GetLastQuestResponse response = new GetLastQuestResponse
+                {
+                    ID = quest.ID,
+                    Name = quest.Name,
+                    Points = quest.Points,
+                    Price = quest.Price
+                };
+
+                return this.JsonApi(response);
+            }
+            catch (QuestException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
+
         [HttpGet("{questId}/is-last")]
         public async Task<JsonResult> QuestTaskIsLast(int questId)
         {

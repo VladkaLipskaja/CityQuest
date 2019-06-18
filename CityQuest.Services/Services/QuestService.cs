@@ -90,7 +90,19 @@ namespace CityQuest.Services
 
             return quests;
         }
-        
+
+        public async Task<Quest> GetLastQuestAsync()
+        {
+            Quest quest = (await _questRepository.ListAllAsync()).OrderByDescending(q => q.ID).FirstOrDefault();
+
+            if (quest == null)
+            {
+                throw new QuestException(QuestErrorCode.NoSuchQuest);
+            }
+
+            return quest;
+        }
+
         public async Task<Quest[]> GetUserQuestsAsync(int userId)
         {
             User user = (await _userRepository.GetAsync(u => u.ID == userId)).FirstOrDefault();

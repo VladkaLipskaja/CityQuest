@@ -75,5 +75,7 @@ namespace CityQuest.Services
         Task IncreaseUserQuestsTaskAsync(QuestToUserDto questToUser);
 
         Task<bool> QuestTaskIsLast(QuestToUserDto questToUser);
+
+        Task<Quest> GetLastQuestAsync();
     }
 }
