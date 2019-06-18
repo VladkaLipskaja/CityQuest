@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityQuest.Services", "CityQ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityQuest.Models", "CityQuest.Models\CityQuest.Models.csproj", "{9D463FC3-6842-4F49-B727-18405B419060}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityQuest.UnitTests", "CityQuest.UnitTests\CityQuest.UnitTests.csproj", "{C2AEC02F-8224-41EB-9C45-591071241A51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9D463FC3-6842-4F49-B727-18405B419060}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D463FC3-6842-4F49-B727-18405B419060}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D463FC3-6842-4F49-B727-18405B419060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2AEC02F-8224-41EB-9C45-591071241A51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2AEC02F-8224-41EB-9C45-591071241A51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2AEC02F-8224-41EB-9C45-591071241A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2AEC02F-8224-41EB-9C45-591071241A51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
