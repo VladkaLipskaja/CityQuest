@@ -120,6 +120,42 @@ namespace CityQuest.Controllers
             }
         }
 
+        [HttpGet("{questId}/is-last")]
+        public async Task<JsonResult> QuestTaskIsLast(int questId)
+        {
+            try
+            {
+                int userId = _securityService.GetUserId(User);
+
+                QuestToUserDto questToUserDto = new QuestToUserDto
+                {
+                    UserId = userId,
+                    QuestId = questId
+                };
+
+                bool isLast = await _questService.QuestTaskIsLast(questToUserDto);
+
+                QuestTaskIsLastResponse response = new QuestTaskIsLastResponse
+                {
+                    IsLast = isLast
+                };
+
+                return this.JsonApi(response);
+            }
+            catch (UserException exception)
+            {
+                return this.JsonApi(exception);
+            }
+            catch (QuestToUserException exception)
+            {
+                return this.JsonApi(exception);
+            }
+            catch (MissionToQuestException exception)
+            {
+                return this.JsonApi(exception);
+            }
+        }
+
         [HttpPut("{questId}")]
         public async Task<JsonResult> IncreaseUserQuestTasks(int questId)
         {
@@ -138,6 +174,10 @@ namespace CityQuest.Controllers
                 return this.JsonApi();
             }
             catch (UserException exception)
+            {
+                return this.JsonApi(exception);
+            }
+            catch (QuestToUserException exception)
             {
                 return this.JsonApi(exception);
             }

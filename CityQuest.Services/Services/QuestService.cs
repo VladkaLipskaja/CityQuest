@@ -135,6 +135,32 @@ namespace CityQuest.Services
             await _questToUserRepository.UpdateAsync(existedQuestToUser);
         }
 
+        public async Task<bool> QuestTaskIsLast(QuestToUserDto questToUser)
+        {
+            User user = (await _userRepository.GetAsync(u => u.ID == questToUser.UserId)).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new UserException(UserErrorCode.NoSuchUser);
+            }
+
+            QuestToUser existedQuestToUser = (await _questToUserRepository.GetAsync(qu => qu.QuestID == questToUser.QuestId && qu.UserID == questToUser.UserId)).FirstOrDefault();
+
+            if (existedQuestToUser == null)
+            {
+                throw new QuestToUserException(QuestToUserErrorCode.NotExist);
+            }
+
+            MissionToQuest missionToQuest = (await _missionToQuestRepository.GetAsync(qu => qu.QuestID == questToUser.QuestId)).OrderByDescending(qu => qu.TaskNumber).FirstOrDefault();
+
+            if (missionToQuest == null)
+            {
+                throw new MissionToQuestException(MissionToQuestErrorCode.LastMission);
+            }
+
+            return missionToQuest.TaskNumber == existedQuestToUser.FinishedTask;
+        }
+
         /// <summary>
         /// Adds the quest asynchronous.
         /// </summary>
